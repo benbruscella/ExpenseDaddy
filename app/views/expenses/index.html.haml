@@ -3,6 +3,7 @@
 %table
   %tr
     %th User
+    %th Category
     %th When
     %th Amount
     %th Description
@@ -13,6 +14,7 @@
   - @expenses.each do |expense|
     %tr
       %td= expense.user.email
+      %td= expense.category.name
       %td= expense.when.strftime('%Y-%m-%d %H:%M:%S')
       %td= expense.amount
       %td= expense.description
