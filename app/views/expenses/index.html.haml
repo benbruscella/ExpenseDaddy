@@ -12,14 +12,11 @@
 
   - @expenses.each do |expense|
     %tr
-      %td= expense.user_id
-      %td= expense.when
+      %td= expense.user.email
+      %td= expense.when.strftime('%Y-%m-%d %H:%M:%S')
       %td= expense.amount
       %td= expense.description
-      %td= link_to 'Show', expense
-      %td= link_to 'Edit', edit_expense_path(expense)
-      %td= link_to 'Destroy', expense, :confirm => 'Are you sure?', :method => :delete
 
 %br
 
-= link_to 'New Expense', new_expense_path
+= link_to 'New Expense', rails_admin_new_url('Expense')
