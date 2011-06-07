@@ -3,10 +3,39 @@
 
 
 .expenses
-  = link_to 'New Expense', rails_admin_new_url('Expense')
-  - Category.all.each do |category|
-    .category
-      = category.name
-    .amount
-      = "$#{Expense.month_category_total(6, category)}"
+  - Category.all(:order => 'name').each do |category|
+    .expense
+      .category
+        = category.name
+      .amount
+        = "$#{Expense.month_category_total(6, category)}"
+    .category_expenses
+      - Expense.month_category(6,category).each do |expense|
+        .category_expense
+          = expense.when.strftime('%Y-%m-%d %H:%M:%S')
+          = expense.user.email
+          = expense.amount
+          = expense.description
+        
+
+
+= content_for(:details) do
+  .history
+    %h2 Spending
+    = link_to 'New Expense', rails_admin_new_url('Expense')
+    %br
+    %br
+    - Expense.all(:order => 'id DESC').each do |expense|
+      = "$#{expense.amount}"
+      %br
+      = expense.when.strftime('%Y-%m-%d %H:%M:%S')
+      %br
+      = expense.user.email
+      %br
+      = expense.category.name
+      %br
+      = expense.description
+      %br
+      %br
+  
     

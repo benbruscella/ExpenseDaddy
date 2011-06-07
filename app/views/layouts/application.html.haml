@@ -17,7 +17,7 @@
         #header
           = link_to image_tag("logo.jpg"), root_url, :title => "Homepage"
       .span-4
-      .span-16
+      .span-15
         #content
           - if flash[:alert]
             %p.flash-error
@@ -28,7 +28,8 @@
           - if show_title?
             %h2= h yield(:title)
           = yield
-      .span-4.last
+      .span-5.last
+        = yield(:details)
       .span-24.last
         #footer
           &copy; ExpenseDaddy

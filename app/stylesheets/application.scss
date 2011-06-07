@@ -1,16 +1,23 @@
-.expenses {
-  
-  a {
-    margin-bottom:20px;
-  }
-}
-
-.category {
+.expense {
   width:100%;
   border-bottom:1px solid #CCC;
+  float:left;
+  margin-top:30px;
+}
+.category {
   font-size:200%;
+  float:left;
 }
 .amount {
-  font-size:175%;
-  padding-left:150px;
+  font-size:150%;
+  float:right;
+}
+.category_expenses {
+  padding-left:20px;
+}
+.history {
+  border-left: 1px solid #CCCCCC;
+  margin-left: 25px;
+  padding-left: 25px;
+  margin-top:3px;
 }

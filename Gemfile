@@ -40,7 +40,8 @@ gem "compass"
 gem "capybara", "0.4.0", :group => :test
 gem "cucumber-rails", :group => :test
 gem "launchy", :group => :test
-gem 'SystemTimer'
+gem 'annotate'
 
+gem 'SystemTimer'
 gem 'devise' # Devise must be required before RailsAdmin
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
