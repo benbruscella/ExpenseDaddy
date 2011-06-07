@@ -1,0 +1,12 @@
+- d = DateTime.now
+-title "Expenses for #{Date::MONTHNAMES[d.month]}, #{d.year} ($#{Expense.total})" 
+
+
+.expenses
+  = link_to 'New Expense', rails_admin_new_url('Expense')
+  - Category.all.each do |category|
+    .category
+      = category.name
+    .amount
+      = "$#{Expense.month_category_total(6, category)}"
+    
