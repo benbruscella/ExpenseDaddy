@@ -1,6 +1,8 @@
 - d = DateTime.now
--title "Expenses for #{Date::MONTHNAMES[d.month]}, #{d.year} ($#{Expense.total})" 
+-title "Expenses for #{Date::MONTHNAMES[d.month]}, #{d.year}"
 
+%h2
+  ="$#{Expense.total}/$#{7000 - Expense.total}" 
 
 .expenses
   - Category.all(:order => 'name').each do |category|
@@ -9,15 +11,14 @@
         = category.name
       .amount
         = "$#{Expense.month_category_total(6, category)}"
-    .category_expenses
+    .categories
       - Expense.month_category(6,category).each do |expense|
-        .category_expense
-          = expense.when.strftime('%Y-%m-%d %H:%M:%S')
-          = expense.user.email
-          = expense.amount
+        .spend
+          = expense.spent_at.strftime('%Y-%m-%d')
+          = expense.user.fullname
           = expense.description
-        
-
+        .amount
+          = "$#{expense.amount}"
 
 = content_for(:details) do
   .history
@@ -28,9 +29,9 @@
     - Expense.all(:order => 'id DESC').each do |expense|
       = "$#{expense.amount}"
       %br
-      = expense.when.strftime('%Y-%m-%d %H:%M:%S')
+      = expense.spent_at.strftime('%Y-%m-%d %H:%M:%S')
       %br
-      = expense.user.email
+      = expense.user.fullname
       %br
       = expense.category.name
       %br

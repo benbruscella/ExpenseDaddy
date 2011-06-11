@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110611005207) do
+ActiveRecord::Schema.define(:version => 20110611020733) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20110611005207) do
 
   create_table "expenses", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "when"
+    t.datetime "spent_at"
     t.float    "amount"
     t.string   "description"
     t.datetime "created_at"

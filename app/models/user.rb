@@ -30,9 +30,12 @@ class User < ActiveRecord::Base
 
   has_many :expenses
   
+  def fullname
+    "#{self.firstname} #{self.lastname}"
+  end
   
   def custom_label_method
-    "#{self.email}"
+    "#{self.fullname}"
   end
   
 end
