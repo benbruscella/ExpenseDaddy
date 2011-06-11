@@ -40,9 +40,18 @@ class Expense < ActiveRecord::Base
       total
     end
 
+    def month_user_total(month, user)
+      total = 0
+      all(:conditions => {:user_id => user.id}).each do |expense|
+        total += expense.amount
+      end
+      total
+    end
+
     def month_category(month, category)
       find(:all, :conditions => {:category_id => category.id}, :order => 'spent_at DESC')
     end
+
     
   end
 
