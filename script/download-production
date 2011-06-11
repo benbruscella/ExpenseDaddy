@@ -2,7 +2,7 @@
 
 COMMAND="rsync --update --recursive --compress --progress --rsh=ssh --verbose"
 REMOTE_USER=root
-REMOTE_HOST=www.tlbnet.com.au
+REMOTE_HOST=www.expensedaddy.com
 scp $REMOTE_USER@$REMOTE_HOST:/www/www.expensedaddy.com/db/production.sqlite3 db/development.sqlite3
 
 echo "Done"
