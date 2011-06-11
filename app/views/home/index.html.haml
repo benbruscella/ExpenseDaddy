@@ -14,7 +14,7 @@
     .categories
       - Expense.month_category(6,category).each do |expense|
         .spend
-          = expense.spent_at.strftime('%Y-%m-%d')
+          = expense.spent_at.strftime('%d/%m/%Y')
           = expense.user.fullname
           = expense.description
         .amount
@@ -26,12 +26,12 @@
     = link_to 'New Expense', rails_admin_new_url('Expense')
     %br
     %br
-    - Expense.all(:order => 'id DESC').each do |expense|
-      = "$#{expense.amount}"
-      %br
-      = expense.spent_at.strftime('%Y-%m-%d %H:%M:%S')
+    - Expense.all(:order => 'spent_at DESC').each do |expense|
+      = "$#{expense.amount} - #{expense.spent_at.strftime('%d/%m/%Y')}"
       %br
       = expense.user.fullname
+      |
+      = link_to 'Edit', rails_admin_edit_url('Expense', expense)
       %br
       = expense.category.name
       %br

@@ -41,7 +41,7 @@ class Expense < ActiveRecord::Base
     end
 
     def month_category(month, category)
-      find(:all, :conditions => {:category_id => category.id}, :order => 'category_id DESC')
+      find(:all, :conditions => {:category_id => category.id}, :order => 'spent_at DESC')
     end
     
   end
