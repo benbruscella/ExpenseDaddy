@@ -4,11 +4,6 @@
 %h2
   ="$#{Expense.total}/$#{7000 - Expense.total}" 
 
-%h3
-  - User.all.each do |user|
-    = "#{user.firstname}: $#{Expense.month_user_total(6, user)}"
-    %br
-
 = render 'chart'
     
 .expenses
