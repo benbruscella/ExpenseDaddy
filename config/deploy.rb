@@ -19,7 +19,7 @@ task :production do
   
   
   set :primary_server, "49.156.18.201"
-  set :deploy_to, "/var/wwwe/www.expensedaddy.com"
+  set :deploy_to, "/var/www/www.expensedaddy.com"
   
   set :user, "railsuser"
   ssh_options[:port] = 22
