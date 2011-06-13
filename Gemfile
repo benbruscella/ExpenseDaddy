@@ -41,6 +41,7 @@ gem "capybara", "0.4.0", :group => :test
 gem "cucumber-rails", :group => :test
 gem "launchy", :group => :test
 gem 'annotate'
+gem 'mysql2'
 
 gem 'SystemTimer'
 gem 'devise' # Devise must be required before RailsAdmin
