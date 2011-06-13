@@ -8,6 +8,8 @@
   - User.all.each do |user|
     = "#{user.firstname}: $#{Expense.month_user_total(6, user)}"
     %br
+
+= render 'chart'
     
 .expenses
   - Category.all(:order => 'name').each do |category|
@@ -32,7 +34,9 @@
     %br
     %br
     - Expense.all(:order => 'spent_at DESC').each do |expense|
-      = "$#{expense.amount} - #{expense.spent_at.strftime('%d/%m/%Y')}"
+      = "$#{expense.amount}"
+      %br
+      = "#{expense.spent_at.strftime('%d/%m/%Y %H:%M:%S')}"
       %br
       = expense.user.fullname
       |

@@ -1,5 +1,6 @@
 .bundle
 db/*.sqlite3
+db/latest.sql
 log/*.log
 tmp/
 .ackrc
@@ -11,3 +12,4 @@ public/stylesheets/compiled/
 public/system/*
 tmp/restart.txt
 coverage/
+script/download-production
