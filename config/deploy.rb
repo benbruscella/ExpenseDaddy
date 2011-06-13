@@ -50,7 +50,6 @@ namespace :deploy do
   end  
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-    apache.restart
   end
 end
 
@@ -61,22 +60,22 @@ namespace :apache do
   end
 
   task :start do
-    sudo "a2ensite #{application}"
+    run "a2ensite #{application}"
     apache.reload
   end
 
   task :stop do
-    sudo "a2dissite #{application}"
+    run "a2dissite #{application}"
     apache.reload
   end
 
   task :restart do
     apache.start
-    run "touch #{current_path}/tmp/restart.txt"
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
   task :configure do
-    sudo "ln -sf #{current_path}/config/#{application}_vhost.conf /etc/apache2/sites-available/#{application}"
+    "ln -sf #{current_path}/config/#{application}_vhost.conf /etc/apache2/sites-available/#{application}"
   end
 end
 
@@ -100,7 +99,8 @@ end
 # Symlink the upload directory to preserve 
 # images and pdf's that have been uploaded
 # by clients of scanoutlet
+before :deploy, 'apache:configure'
 after :deploy, 'symlink:uploads'
 after :deploy, 'symlink:logs'
 after :deploy, 'symlink:dbconfig'
-after :deploy, 'apache:configure'
+
