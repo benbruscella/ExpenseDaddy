@@ -75,7 +75,7 @@ namespace :apache do
   end
 
   task :configure do
-    "ln -sf #{current_path}/config/#{application}_vhost.conf /etc/apache2/sites-available/#{application}"
+    run "ln -sf #{current_path}/config/#{application}_vhost.conf /etc/apache2/sites-available/#{application}"
   end
 end
 
