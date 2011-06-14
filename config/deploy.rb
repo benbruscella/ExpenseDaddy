@@ -90,7 +90,7 @@ namespace :symlink do
     run "ln -nfs #{shared_path}/log #{release_path}/log"
   end
   task :dbconfig do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    run "sudo ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
   
 end
