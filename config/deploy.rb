@@ -99,8 +99,8 @@ end
 # Symlink the upload directory to preserve 
 # images and pdf's that have been uploaded
 # by clients of scanoutlet
-before :deploy, 'apache:configure'
 after :deploy, 'symlink:uploads'
 after :deploy, 'symlink:logs'
 after :deploy, 'symlink:dbconfig'
+after :deploy, 'apache:configure'
 
