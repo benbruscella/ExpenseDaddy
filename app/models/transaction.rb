@@ -1,18 +1,18 @@
 # == Schema Information
 #
-# Table name: expenses
+# Table name: transactions
 #
-#  id          :integer         not null, primary key
-#  user_id     :integer
-#  when        :datetime
+#  id          :integer(4)      not null, primary key
+#  user_id     :integer(4)
+#  spent_at    :datetime
 #  amount      :float
 #  description :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  category_id :integer         default(1)
+#  category_id :integer(4)      default(1)
 #
 
-class Expense < ActiveRecord::Base
+class Transaction < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :category
@@ -25,8 +25,8 @@ class Expense < ActiveRecord::Base
 
     def total
       total = 0
-      all.each do |expense|
-        total += expense.amount
+      all.each do |transaction|
+        total += transaction.amount
       end
       total
     end
@@ -34,16 +34,16 @@ class Expense < ActiveRecord::Base
 
     def month_category_total(month, category)
       total = 0
-      all(:conditions => {:category_id => category.id}).each do |expense|
-        total += expense.amount
+      all(:conditions => {:category_id => category.id}).each do |transaction|
+        total += transaction.amount
       end
       total
     end
 
     def month_user_total(month, user)
       total = 0
-      all(:conditions => {:user_id => user.id}).each do |expense|
-        total += expense.amount
+      all(:conditions => {:user_id => user.id}).each do |transaction|
+        total += transaction.amount
       end
       total
     end

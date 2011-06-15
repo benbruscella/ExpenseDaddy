@@ -1,45 +1,45 @@
 - d = DateTime.now
--title "Expenses for #{Date::MONTHNAMES[d.month]}, #{d.year}"
+-title "Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"
 
 %h2
-  ="$#{Expense.total}/$#{7000 - Expense.total}" 
+  ="$#{Transaction.total}/$#{7000 - Transaction.total}" 
 
 = render 'chart'
     
-.expenses
+.transactions
   - Category.all(:order => 'name').each do |category|
-    .expense
+    .transaction
       .category
         = category.name
       .amount
-        = "$#{Expense.month_category_total(6, category)}"
+        = "$#{Transaction.month_category_total(6, category)}"
     .categories
-      - Expense.month_category(6,category).each do |expense|
+      - Transaction.month_category(6,category).each do |transaction|
         .spend
-          = expense.spent_at.strftime('%d/%m/%Y')
-          = expense.user.fullname
-          = expense.description
+          = transaction.spent_at.strftime('%d/%m/%Y')
+          = transaction.user.fullname
+          = transaction.description
         .amount
-          = "$#{expense.amount}"
+          = "$#{transaction.amount}"
 
 = content_for(:details) do
   .history
     %h2 Spending
-    = link_to 'New Expense', rails_admin_new_url('Expense')
+    = link_to 'New transaction', rails_admin_new_url('transaction')
     %br
     %br
-    - Expense.all(:order => 'spent_at DESC').each do |expense|
-      = "$#{expense.amount}"
+    - Transaction.all(:order => 'spent_at DESC').each do |transaction|
+      = "$#{transaction.amount}"
       %br
-      = "#{expense.spent_at.strftime('%d/%m/%Y %H:%M:%S')}"
+      = "#{transaction.spent_at.strftime('%d/%m/%Y %H:%M:%S')}"
       %br
-      = expense.user.fullname
+      = transaction.user.fullname
       |
-      = link_to 'Edit', rails_admin_edit_url('Expense', expense)
+      = link_to 'Edit', rails_admin_edit_url('transaction', transaction)
       %br
-      = expense.category.name
+      = transaction.category.name
       %br
-      = expense.description
+      = transaction.description
       %br
       %br
   

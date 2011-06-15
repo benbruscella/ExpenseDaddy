@@ -20,7 +20,7 @@
            series: [
            <% User.all.each do |user| %>
            {
-              name: '<%= "#{user.firstname} $#{Expense.month_user_total(6, user)}"%>',
+              name: '<%= "#{user.firstname} $#{Transaction.month_user_total(6, user)}"%>',
               data: [2, 1, 4]
            },
            <% end %>

@@ -1,9 +1,7 @@
 class HomeController < ApplicationController
-  # GET /expenses
-  # GET /expenses.xml
-  def index
-    @expenses = Expense.all
 
+  def index
+    @transactions = Transaction.all
     respond_to do |format|
       format.html # index.html.erb
     end

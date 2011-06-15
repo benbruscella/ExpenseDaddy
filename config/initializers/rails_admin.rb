@@ -4,7 +4,7 @@ RailsAdmin.config do |config|
       :custom_label_method
     end
   end
-  config.model Expense do
+  config.model Transaction do
     object_label_method do
       :custom_label_method
     end
