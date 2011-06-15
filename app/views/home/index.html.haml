@@ -1,9 +1,3 @@
-- d = DateTime.now
--title "Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"
-
-%h2
-  ="$#{Transaction.total}/$#{7000 - Transaction.total}" 
-
 = render 'chart'
     
 .transactions

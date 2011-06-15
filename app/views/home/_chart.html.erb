@@ -1,3 +1,4 @@
+<%- d = DateTime.now %>
 <script type="text/javascript">
   var chart1; // globally available
   $(document).ready(function() {
@@ -7,7 +8,7 @@
               defaultSeriesType: 'bar'
            },
            title: {
-              text: 'Expenses for June'
+              text: '<%="Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"%> <%="$#{Transaction.total}/$#{7000 - Transaction.total}"%>'
            },
            xAxis: {
               categories: ['General', 'Food', 'Toys']
