@@ -8,7 +8,7 @@
               defaultSeriesType: 'bar'
            },
            title: {
-              text: '<%="Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"%> <%="$#{Transaction.total}/$#{7000 - Transaction.total}"%>'
+              text: '<%="Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"%> <%="#{number_to_currency(Transaction.total)}/#{number_to_currency(7000 - Transaction.total)}"%>'
            },
            xAxis: {
               categories: ['General', 'Food', 'Toys']
@@ -21,7 +21,7 @@
            series: [
            <% User.all.each do |user| %>
            {
-              name: '<%= "#{user.firstname} $#{Transaction.month_user_total(6, user)}"%>',
+              name: '<%= "#{user.firstname} #{number_to_currency(Transaction.month_user_total(6, user))}"%>',
               data: [2, 1, 4]
            },
            <% end %>

@@ -24,35 +24,21 @@ class Transaction < ActiveRecord::Base
   class << self
 
     def total
-      total = 0
-      all.each do |transaction|
-        total += transaction.amount
-      end
-      total
+      sum(:amount)
     end
 
-
     def month_category_total(month, category)
-      total = 0
-      all(:conditions => {:category_id => category.id}).each do |transaction|
-        total += transaction.amount
-      end
-      total
+      sum(:amount, :conditions => {:category_id => category.id})
     end
 
     def month_user_total(month, user)
-      total = 0
-      all(:conditions => {:user_id => user.id}).each do |transaction|
-        total += transaction.amount
-      end
-      total
+      sum(:amount, :conditions => {:user_id => user.id})
     end
 
     def month_category(month, category)
       find(:all, :conditions => {:category_id => category.id}, :order => 'spent_at DESC')
     end
 
-    
   end
 
   
