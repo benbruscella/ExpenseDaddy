@@ -39,6 +39,10 @@ class Transaction < ActiveRecord::Base
       find(:all, :conditions => {:category_id => category.id}, :order => 'spent_at DESC')
     end
 
+    def month_user_category_total(month, user, category)
+      sum(:amount, :conditions => {:category_id => category.id, :user_id => user.id})
+    end
+
   end
 
   

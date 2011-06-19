@@ -11,18 +11,24 @@
               text: '<%="Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"%> <%="#{number_to_currency(Transaction.total)}/#{number_to_currency(7000 - Transaction.total)}"%>'
            },
            xAxis: {
-              categories: ['General', 'Food', 'Toys']
+              categories: [<%=Category.all.collect { |c| "'#{c.name}', "} %>]
            },
            yAxis: {
               title: {
-                 text: 'Spent'
+                 text: 'Spendage'
               }
            },
+           tooltip: {
+             formatter: function() {
+               return "$" + Highcharts.numberFormat(this.y, 2) 
+               + ' (' + this.series.name + ')';
+             }
+           },           
            series: [
            <% User.all.each do |user| %>
            {
               name: '<%= "#{user.firstname} #{number_to_currency(Transaction.month_user_total(6, user))}"%>',
-              data: [2, 1, 4]
+              data: [<%= Category.all.map {|c| "#{Transaction.month_user_category_total(6, user, c)}, "  }%>]
            },
            <% end %>
            ]
