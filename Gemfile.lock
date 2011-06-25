@@ -1,10 +1,11 @@
 GIT
   remote: git://github.com/sferik/rails_admin.git
-  revision: 578255e8e68a748b47cde124aadc8bccd15f1342
+  revision: 01a6807e12f97bd614d5d679b149f4d5226afda7
   specs:
     rails_admin (0.0.1)
       builder (~> 2.1.0)
       fastercsv
+      haml (>= 3.0.0, < 3.2.0)
       rails (~> 3.0.7)
 
 GEM
@@ -175,7 +176,7 @@ GEM
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    tzinfo (0.3.27)
+    tzinfo (0.3.28)
     warden (1.0.4)
       rack (>= 1.0)
     xpath (0.1.4)
