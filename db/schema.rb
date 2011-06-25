@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110617121011) do
+ActiveRecord::Schema.define(:version => 20110625095226) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(:version => 20110617121011) do
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
 
+  create_table "transaction_types", :force => true do |t|
+    t.string   "typename"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "transactions", :force => true do |t|
     t.integer  "user_id"
     t.datetime "spent_at"
@@ -45,7 +51,8 @@ ActiveRecord::Schema.define(:version => 20110617121011) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id", :default => 1
+    t.integer  "category_id",         :default => 1
+    t.integer  "transaction_type_id", :default => 1
   end
 
   create_table "users", :force => true do |t|

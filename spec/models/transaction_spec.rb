@@ -2,14 +2,15 @@
 #
 # Table name: transactions
 #
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)
-#  spent_at    :datetime
-#  amount      :float
-#  description :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  category_id :integer(4)      default(1)
+#  id                  :integer(4)      not null, primary key
+#  user_id             :integer(4)
+#  spent_at            :datetime
+#  amount              :float
+#  description         :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  category_id         :integer(4)      default(1)
+#  transaction_type_id :integer(4)
 #
 
 require 'spec_helper'
