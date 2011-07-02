@@ -25,24 +25,34 @@ class Transaction < ActiveRecord::Base
 
   class << self
 
-    def total
-      sum(:amount)
+    def by_month(month)
+      find(:all, :conditions => ["spent_at between ? and ?",
+         Date.today.beginning_of_month, Date.today.end_of_month], :order => 'spent_at DESC')
+    end
+
+    def total(month)
+      sum(:amount, :conditions => ["spent_at between ? and ?",
+         Date.today.beginning_of_month, Date.today.end_of_month])
     end
 
     def month_category_total(month, category)
-      sum(:amount, :conditions => {:category_id => category.id})
+      sum(:amount, :conditions => ["spent_at between ? and ? and category_id = ?",
+         Date.today.beginning_of_month, Date.today.end_of_month, category.id])
     end
 
     def month_user_total(month, user)
-      sum(:amount, :conditions => {:user_id => user.id})
+      sum(:amount, :conditions => ["spent_at between ? and ? and user_id = ?",
+         Date.today.beginning_of_month, Date.today.end_of_month, user.id])
     end
 
     def month_category(month, category)
-      find(:all, :conditions => {:category_id => category.id}, :order => 'spent_at DESC')
+      find(:all, :conditions => ["spent_at between ? and ? and category_id = ?",
+         Date.today.beginning_of_month, Date.today.end_of_month, category.id], :order => 'spent_at DESC')
     end
 
     def month_user_category_total(month, user, category)
-      sum(:amount, :conditions => {:category_id => category.id, :user_id => user.id})
+      sum(:amount, :conditions => ["spent_at between ? and ? and category_id = ? and user_id = ?",
+         Date.today.beginning_of_month, Date.today.end_of_month, category.id, user.id])
     end
 
   end

@@ -1,4 +1,5 @@
 <%- d = DateTime.now %>
+<%- m = DateTime.now.month %>
 <script type="text/javascript">
   var chart1; // globally available
   $(document).ready(function() {
@@ -8,7 +9,7 @@
               defaultSeriesType: 'bar'
            },
            title: {
-              text: '<%="Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"%> <%="#{number_to_currency(Transaction.total)}/#{number_to_currency(7000 - Transaction.total)}"%>'
+              text: '<%="Transactions for #{Date::MONTHNAMES[d.month]}, #{d.year}"%> <%="#{number_to_currency(Transaction.total(m))}/#{number_to_currency(7000 - Transaction.total(m))}"%>'
            },
            xAxis: {
               categories: [<%=Category.all.collect { |c| "'#{c.name}', "} %>]
@@ -27,8 +28,8 @@
            series: [
            <% User.all.each do |user| %>
            {
-              name: '<%= "#{user.firstname} #{number_to_currency(Transaction.month_user_total(6, user))}"%>',
-              data: [<%= Category.all.map {|c| "#{Transaction.month_user_category_total(6, user, c)}, "  }%>]
+              name: '<%= "#{user.firstname} #{number_to_currency(Transaction.month_user_total(DateTime.now.month, user))}"%>',
+              data: [<%= Category.all.map {|c| "#{Transaction.month_user_category_total(DateTime.now.month, user, c)}, "  }%>]
            },
            <% end %>
            ]

@@ -6,9 +6,9 @@
       .category
         = category.name
       .amount
-        = "#{number_to_currency(Transaction.month_category_total(6, category))}"
+        = "#{number_to_currency(Transaction.month_category_total(DateTime.now.month, category))}"
     .categories
-      - Transaction.month_category(6,category).each do |transaction|
+      - Transaction.month_category(DateTime.now.month,category).each do |transaction|
         .spend
           = transaction.spent_at.strftime('%d/%m/%Y')
           = transaction.user.fullname
@@ -22,19 +22,22 @@
     = link_to 'New transaction', rails_admin_new_url('transaction')
     %br
     %br
-    - Transaction.all(:order => 'spent_at DESC').each do |transaction|
-      = "#{number_to_currency(transaction.amount)}"
-      %br
-      = "#{transaction.spent_at.strftime('%d/%m/%Y %H:%M:%S')}"
-      %br
-      = transaction.user.fullname
-      |
-      = link_to 'Edit', rails_admin_edit_url('transaction', transaction)
-      %br
-      = transaction.category.name
-      %br
-      = transaction.description
-      %br
-      %br
+    -if @transaction.nil?
+
+    -else
+      - @transactions.each do |transaction|
+        = "#{number_to_currency(transaction.amount)}"
+        %br
+        = "#{transaction.spent_at.strftime('%d/%m/%Y %H:%M:%S')}"
+        %br
+        = transaction.user.fullname
+        |
+        = link_to 'Edit', rails_admin_edit_url('transaction', transaction)
+        %br
+        = transaction.category.name
+        %br
+        = transaction.description
+        %br
+        %br
   
     
