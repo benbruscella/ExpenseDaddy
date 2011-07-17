@@ -22,7 +22,7 @@
     = link_to 'New transaction', rails_admin_new_url('transaction')
     %br
     %br
-    -if @transaction.nil?
+    -if @transactions.nil?
 
     -else
       - @transactions.each do |transaction|
