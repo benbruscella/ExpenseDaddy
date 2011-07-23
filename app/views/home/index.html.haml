@@ -1,12 +1,13 @@
 = render 'chart'
 
 .transactions
+
   - Category.incomes.each do |category|
     .transaction
       .category.credit
         = category.name
       .amount.credit
-        = "#{number_to_currency(Transaction.month_income_total(@month))}"
+        = "#{number_to_currency(Transaction.credits.by_month(@month).sum(:amount))}"
     .categories
       - Transaction.credits.by_category(category.id).by_month(@month).each do |transaction|
         .spend
@@ -15,14 +16,15 @@
           = transaction.description
         .amount
           = "$#{transaction.amount}"
+
   - Category.debits(:order => 'name').each do |category|
     .transaction
       .category.debit
         = category.name
       .amount.debit
-        = "#{number_to_currency(Transaction.month_category_total(@month, category))}"
+        = "#{number_to_currency(Transaction.debits.by_category(category.id).by_month(@month).sum(:amount))}"
     .categories
-      - Transaction.month_category(@month,category).each do |transaction|
+      - Transaction.debits.by_category(category.id).by_month(@month).desc.each do |transaction|
         .spend
           = transaction.spent_at.strftime('%d/%m/%Y')
           = transaction.user.fullname

@@ -7,7 +7,7 @@
               defaultSeriesType: 'bar'
            },
            title: {
-              text: '<%="#{Date::MONTHNAMES[@month]}, 2011"%> <%=" #{number_to_currency(Transaction.total(@month))} (Budget: #{number_to_currency(8000 - Transaction.total(@month))}, Income: #{number_to_currency(Transaction.month_income_total(@month))})"%>'
+              text: '<%="#{Date::MONTHNAMES[@month]}, 2011"%> <%=" #{number_to_currency(Transaction.debits.by_month(@month).sum(:amount))} (Budget: #{number_to_currency(8000 - Transaction.debits.by_month(@month).sum(:amount))}, Income: #{number_to_currency(Transaction.credits.by_month(@month).sum(:amount))})"%>'
            },
            xAxis: {
               categories: [<%=Category.all.collect { |c| "'#{c.name}', "} %>]
@@ -26,8 +26,9 @@
            series: [
            <% User.all.each do |user| %>
            {
-              name: '<%= "#{user.firstname} #{number_to_currency(Transaction.month_user_total(@month, user))}"%>',
-              data: [<%= Category.all.map {|c| "#{Transaction.month_user_category_total(@month, user, c)}, "  }%>]
+              name: '<%= "#{user.firstname} #{number_to_currency(Transaction.debits.by_user(user.id).by_month(@month).sum(:amount))}"%>',
+              data: [<%= Category.all.map {|c| 
+                    "#{Transaction.debits.by_user(user.id).by_category(c.id).by_month(@month).sum(:amount)}, "  }%>]
            },
            <% end %>
            ]
