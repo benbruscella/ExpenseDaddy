@@ -10,4 +10,7 @@
 
 class Category < ActiveRecord::Base
   has_many :transactions
+  scope :debits, :conditions => ["name != 'income'"]
+  scope :incomes, :conditions => {:name => 'income'}
+
 end

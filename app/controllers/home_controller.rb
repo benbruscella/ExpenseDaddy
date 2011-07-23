@@ -4,7 +4,7 @@ class HomeController < ApplicationController
     @month = DateTime.now.month
     @month = params[:month] unless params[:month].nil?
     @month = @month.to_i
-    @transactions = Transaction.by_month(@month)
+    @transactions = Transaction.by_month(@month.to_i).desc
     respond_to do |format|
       format.html # index.html.erb
     end

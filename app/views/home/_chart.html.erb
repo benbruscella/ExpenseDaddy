@@ -7,7 +7,7 @@
               defaultSeriesType: 'bar'
            },
            title: {
-              text: '<%="Transactions for #{Date::MONTHNAMES[@month]}, 2011"%> <%="#{number_to_currency(Transaction.total(@month))}/#{number_to_currency(8000 - Transaction.total(@month))}"%>'
+              text: '<%="#{Date::MONTHNAMES[@month]}, 2011"%> <%=" #{number_to_currency(Transaction.total(@month))} (Budget: #{number_to_currency(8000 - Transaction.total(@month))}, Income: #{number_to_currency(Transaction.month_income_total(@month))})"%>'
            },
            xAxis: {
               categories: [<%=Category.all.collect { |c| "'#{c.name}', "} %>]

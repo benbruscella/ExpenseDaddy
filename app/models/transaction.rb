@@ -19,6 +19,15 @@ class Transaction < ActiveRecord::Base
   belongs_to :category
   belongs_to :transaction_type
 
+  scope :debits, :conditions => { :transaction_type_id => 1 }
+  scope :credits, :conditions => { :transaction_type_id => 2 }
+  scope :desc, :order => "spent_at DESC"
+  scope :by_category, lambda { |category_id| { :conditions => {:category_id => category_id}  }}
+  scope :by_user, lambda { |user_id| { :conditions => {:user_id => user_id}  }}
+  scope :by_month, 
+    lambda { |m| {
+        :conditions => ["spent_at between ? and ?", Date.new(YEAR, m).beginning_of_month, Date.new(YEAR, m).end_of_month] }}
+
   def custom_label_method
     "#{self.amount}"
   end
@@ -27,36 +36,32 @@ class Transaction < ActiveRecord::Base
 
   class << self
 
-    def by_month(month)
-      find(:all, 
-        :conditions => ["spent_at between ? and ?",
-        Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month], 
-        :order => 'spent_at DESC')
-    end
-
     def total(month)
-      sum(:amount, :conditions => ["spent_at between ? and ?",
-         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month])
+      debits.by_month(month.to_i).sum(:amount)
     end
 
     def month_category_total(month, category)
-      sum(:amount, :conditions => ["spent_at between ? and ? and category_id = ?",
-         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, category.id])
+      debits.by_category(category.id).by_month(month.to_i).sum(:amount)
     end
 
     def month_user_total(month, user)
-      sum(:amount, :conditions => ["spent_at between ? and ? and user_id = ?",
-         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, user.id])
+      debits.by_user(user.id).by_month(month.to_i).sum(:amount)
     end
 
     def month_category(month, category)
-      find(:all, :conditions => ["spent_at between ? and ? and category_id = ?",
-         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, category.id], :order => 'spent_at DESC')
+      debits.by_category(category.id).by_month(month.to_i).desc
     end
 
     def month_user_category_total(month, user, category)
-      sum(:amount, :conditions => ["spent_at between ? and ? and category_id = ? and user_id = ?",
-         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, category.id, user.id])
+      debits.by_user(user.id).by_category(category.id).by_month(month.to_i).sum(:amount)
+    end
+
+    def month_income_total(month)
+      credits.by_month(month.to_i).sum(:amount)
+    end
+
+    def month_user_income_total(month, user)
+      credits.by_user(user.id).by_month(month.to_i).sum(:amount)
     end
 
   end
