@@ -3,9 +3,9 @@
 .transactions
   - Category.incomes.each do |category|
     .transaction
-      .category
+      .category.credit
         = category.name
-      .amount
+      .amount.credit
         = "#{number_to_currency(Transaction.month_income_total(@month))}"
     .categories
       - Transaction.credits.by_category(category.id).by_month(@month).each do |transaction|
@@ -17,9 +17,9 @@
           = "$#{transaction.amount}"
   - Category.debits(:order => 'name').each do |category|
     .transaction
-      .category
+      .category.debit
         = category.name
-      .amount
+      .amount.debit
         = "#{number_to_currency(Transaction.month_category_total(@month, category))}"
     .categories
       - Transaction.month_category(@month,category).each do |transaction|
