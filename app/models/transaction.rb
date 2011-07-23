@@ -22,37 +22,41 @@ class Transaction < ActiveRecord::Base
   def custom_label_method
     "#{self.amount}"
   end
+  
+  YEAR=2011
 
   class << self
 
     def by_month(month)
-      find(:all, :conditions => ["spent_at between ? and ?",
-         Date.today.beginning_of_month, Date.today.end_of_month], :order => 'spent_at DESC')
+      find(:all, 
+        :conditions => ["spent_at between ? and ?",
+        Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month], 
+        :order => 'spent_at DESC')
     end
 
     def total(month)
       sum(:amount, :conditions => ["spent_at between ? and ?",
-         Date.today.beginning_of_month, Date.today.end_of_month])
+         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month])
     end
 
     def month_category_total(month, category)
       sum(:amount, :conditions => ["spent_at between ? and ? and category_id = ?",
-         Date.today.beginning_of_month, Date.today.end_of_month, category.id])
+         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, category.id])
     end
 
     def month_user_total(month, user)
       sum(:amount, :conditions => ["spent_at between ? and ? and user_id = ?",
-         Date.today.beginning_of_month, Date.today.end_of_month, user.id])
+         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, user.id])
     end
 
     def month_category(month, category)
       find(:all, :conditions => ["spent_at between ? and ? and category_id = ?",
-         Date.today.beginning_of_month, Date.today.end_of_month, category.id], :order => 'spent_at DESC')
+         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, category.id], :order => 'spent_at DESC')
     end
 
     def month_user_category_total(month, user, category)
       sum(:amount, :conditions => ["spent_at between ? and ? and category_id = ? and user_id = ?",
-         Date.today.beginning_of_month, Date.today.end_of_month, category.id, user.id])
+         Date.new(YEAR, month.to_i).beginning_of_month, Date.new(YEAR, month.to_i).end_of_month, category.id, user.id])
     end
 
   end

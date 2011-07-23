@@ -6,9 +6,9 @@
       .category
         = category.name
       .amount
-        = "#{number_to_currency(Transaction.month_category_total(DateTime.now.month, category))}"
+        = "#{number_to_currency(Transaction.month_category_total(@month, category))}"
     .categories
-      - Transaction.month_category(DateTime.now.month,category).each do |transaction|
+      - Transaction.month_category(@month,category).each do |transaction|
         .spend
           = transaction.spent_at.strftime('%d/%m/%Y')
           = transaction.user.fullname

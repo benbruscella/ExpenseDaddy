@@ -18,7 +18,10 @@
         #header
           = link_to image_tag("logo.jpg"), root_url, :title => "Homepage"
         #accounts
-          Ormond
+          Ormond:
+          = link_to "June", root_url + "?month=6"
+          |
+          = link_to "July", root_url + "?month=7"
       .span-19
         #content
           - if flash[:alert]
